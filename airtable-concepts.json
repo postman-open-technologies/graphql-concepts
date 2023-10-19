@@ -1,0 +1,274 @@
+[
+  {
+    "Term": "Field Level Authorization",
+    "Description": "Permissions in GraphQL can be specified at the query level, object level, or field level.",
+    "Tags": "authorization,schema,non-spec",
+    "Example": "type Post @model @auth(rules: [\n    { allow: private, operations: [read] },\n    { allow: groups, groups: [\"admin\"] }.\n    { allow: owner, ownerField: \"author\" }]\n]) {\n    id: ID!\n    title: String!\n    author: String!\n}",
+    "Image": "Field Level Authorization (https://v5.airtableusercontent.com/v1/21/21/1696392000000/dLINWUTvM8jNxhTvjmSfUQ/PUzaQRVgGnqUPkPSK95MYoMXnMYXACnjupDTzahaUBNjQV-MWjxAy-Oc-9JqICJQ8cvljsowg0Co8KfHxEXh0IU4ff4jqiN9Rnt9MzN2HNoRqbii3oUdWxzx3zPCG5lR/D2pCgFPSQ3IdjT3J9hqxDLLLkW9qrO3_OYh70RmciwY)",
+    "Source": "https://graphql.org/learn/authorization/"
+  },
+  {
+    "Term": "Query Operation",
+    "Description": "A query is a read-only operation. It enables the user to request specific fields from objects and receive only those fields, avoiding over- or under-fetching.",
+    "Tags": "operation,spec",
+    "Example": "type Query {\n    users: [User]\n    user(id: ID!): User\n}",
+    "Image": "Query Operation (https://v5.airtableusercontent.com/v1/21/21/1696392000000/3JrC5cDJvEE6dZ0dWBdZhw/kkmy1CqpZVpR5S6QTdGy6-36toOLx07SD5n9BejNUftYfmAvNFmzAmSHxEwWbg-NBn7LuHJXj_7RRJF1erk0FjWDBmtKv2PbklipEKsp-c0/Ftw4hbGdrFK10YmTHTutxM9020zvpUeoLyistAD9k4A)",
+    "Source": ""
+  },
+  {
+    "Term": "Mutation Operation",
+    "Description": "A mutation is a write operation followed by a fetch. It enables the user to mutate (add, update, or delete) specified fields and then query the modified value on the object returned.",
+    "Tags": "operation,spec",
+    "Example": "type User {\n    id: ID!\n    name: String!\n    email: String!\n}\n\ntype Mutation {\n    createUser(name: String!, email: String!)User!\n    updateUser(id: ID!, name: String!, email: String!)User!\n    deleteUser(id: ID!)Boolean!",
+    "Image": "Mutation Operation (https://v5.airtableusercontent.com/v1/21/21/1696392000000/_HNqMigaxYlAmiesjMTJAA/5F1DWfhyoZ92PxxyU6HUuBD2u4mkDDpQdgMK9Aojcf9lwCJLJEDw-LxNWH4XdZhJxrE8P43psyHk79VGSIcJ7LBKcBhL3aYUxT-Gpx1_Jz0/v7GsZ9n64lGGyDtSG7MhJqadwN5t_t9RJEA_vnoFPuk)",
+    "Source": ""
+  },
+  {
+    "Term": "Subscription Operation",
+    "Description": "Subscriptions are a feature in the GraphQL specification that allows clients to subscribe to events and receive real-time updates from the server. They are a way for clients to receive a stream of data pushed from the server as new data becomes available.",
+    "Tags": "operation,spec",
+    "Example": "type Message {\n    id: ID!\n    text: String!\n    createdAt: Date!\n}\n\ntype Subcription {\n    newMessage: Message!\n}\n\nsubscription {\n    newMessage {\n        id\n        text\n        createdAt\n    }\n}",
+    "Image": "Subscription Operation (https://v5.airtableusercontent.com/v1/21/21/1696392000000/0pCOc0CNY9u6dxvgppCTeA/ssuW6kGixTBmETDcTPOuZ_DJq7Qk7HzifGvJb0bfPrdGN5sGo2BzJbOhlVGMzm-L5mAPe4eYFyQfAT-1wl6OCEfnJsOfWE7if_IHI6Hy1i6jN0LPAhsaAHlmxY48XoUL/Reyy1uo9ec_cdfxX4-7aKeTTo9l2qbIlBaQLcZN6Dck)",
+    "Source": "https://hackmd.io/VolsyxcLSOGDCjyb1BkZog?view"
+  },
+  {
+    "Term": "Schema",
+    "Description": "A GraphQL schema is a list of object types that define all of the data available to clients of the API.",
+    "Tags": "schema,spec",
+    "Example": "schema {\n  query: Query\n  mutation: Mutation\n  subscription: Subscription\n}",
+    "Image": "Schema (https://v5.airtableusercontent.com/v1/21/21/1696392000000/x3q_odwA8CSwa2CQa59xyQ/FhDyIk6fQYonO_lcamRnJ_1o_myID4dmJRk0EoNOFd--g1DXIa-GhOZmdqSxksyldhRYGYqUoTMshen8zvEkBGb_78P4scVbBd71NNgRzyc/toSUweganjpGnyLPIGhrbhsKVYmpy_NRRbeM4KlaFfQ)",
+    "Source": ""
+  },
+  {
+    "Term": "Resolver",
+    "Description": "A function that returns a value for a field with types of a GraphQL schema. Each field in a GraphQL schema has a corresponding resolver to return the value of that field.",
+    "Tags": "spec,execution-engine",
+    "Example": "const resolvers = {\n    Query: {\n       post: (parent, args, context, info)=> {\n          const {id} = args;\n          return posts.find(post => post.id === id);\n       }\n    }\n};",
+    "Image": "Resolver (https://v5.airtableusercontent.com/v1/21/21/1696392000000/PW4Xl4N5wEB0IzDBONhbtA/WrKw_N6JuMP7xXtNGrFPqU5fYmlo6b5fF4N1WaPImLNVTiebTLdAfeTVVUIXwfBB3BmMZMrPHM4WVYdTwgYpZvY3NR6y9jzxKOAJvEgmGso/MoYZXqrTWczlWxbXQFJL3v6IWpM-5SV0hn2HVVVP-oY)",
+    "Source": ""
+  },
+  {
+    "Term": "Non-null Types",
+    "Description": "Non-null types represent a value that cannot be null. Fields that are nonnull or where null is not an acceptable response are identified with an exclamation mark.",
+    "Tags": "nonnull,spec",
+    "Example": "Valid uses of the \"!\" to indicate that a field or list can't be null applied to fields and lists.\n\nString! - returns a string that can't be null\n[Words] - returns a list and can return a null list or null members.\n[Words!] - returns a list that can be null but its members can't be\n[Words]!- returns a list that can't be null but its members can return null\n[Words!]!- returns a list that can't be null and can't have null members",
+    "Image": "Non-Null Types (https://v5.airtableusercontent.com/v1/21/21/1696392000000/YghoD3tKdlL_UxOEC3aCDg/hOU_nB8UTeksD-92Gx23NNqlKjZVo6e9ZJLRyFs8al_2__KFum1tuO70OUz1X5CJ_02RKTGYtsZdp6tqu_kXUf0LGx19bfXuFiPtCQn2Wlc/cTKtsz5AZWfI5Bg-HDyVqIKbWiuWgkuq3AR64_wtj1w)",
+    "Source": ""
+  },
+  {
+    "Term": "Types",
+    "Description": "Types describe the objects that are part of a GraphQL schema. The GraphQL specification defines eight types: \n\n1. Scalar Types\n2. Object Types\n3. Enum Types\n4. Interface Types\n5. Union Types\n6. Input Object Types\n7. List Types\n8. Non-null Types",
+    "Tags": "type,spec",
+    "Example": "type User {\n    id: ID!\n    name: String!\n    email: String\n}",
+    "Image": "Types (https://v5.airtableusercontent.com/v1/21/21/1696392000000/MHgwEN-1ZiolDn2Vi2AhwQ/ZJ75R2S1BtettV9CyPmIUgiYCbyZLLLJGdLsfKjxNteLN0T4UT7CaZf1oRrl-tNWpVt51mCYHyJcB_ngZ8qDebbi-PvvnqwO22FXKODmNGU/-Xc4kicxGU8aNgT3_rwRpWKappmQQwIyyouO2aUv1MI)",
+    "Source": ""
+  },
+  {
+    "Term": "Union Types",
+    "Description": "A union is a type made up of a union of two or more object types.",
+    "Tags": "type,spec",
+    "Example": "union Booking = Hotel | Flight | Train\nThe Booking type is a union of types Hotel and Flight which implies that a query on the type Booking can return Hotel or Flight or Train details.",
+    "Image": "Union Types (https://v5.airtableusercontent.com/v1/21/21/1696392000000/iJ1amoK2aCLBIU2mQKCDsA/a9AHQ_3vuVp07QWkk78Al7nfZGLK8sncACtjlYKwhh1YMgcxK_v6XGOBMYj3teJc6kQQpjt_j_TXLwvaJVKcbYytYw4qFdC7sW5JItOjiZI/MXPECJawQ-lli1Hr3Zx9nnyVm5gw9Q55KkHPG-WFLXg)",
+    "Source": ""
+  },
+  {
+    "Term": "Interface Types",
+    "Description": "Interfaces in GraphQL represent a list of fields that must be defined by the object(s) that implement it.",
+    "Tags": "type,spec",
+    "Example": "Error can be represented as an interface and implemented by different types of error objects like RateLimitError, NotFoundError etc.\ninterface Error {\n\tcode: String!\n}\nThis ensures that each error type will have a code to describe it.",
+    "Image": "Interface Types (https://v5.airtableusercontent.com/v1/21/21/1696392000000/ypgiNiqoUAoqPOnE6u_OmA/dQCm-IvIyMaZwYJbTzpo_1DezR8LjXfJkviPvV89Huy8qPRzm_SNu098EpFe-RdrbreQUGe_dUcxNZg5_MRd3GVGdi8873Ch3dPc3lI4GyY/448ah2JsgoMElEU-CknlcCtDifUKypU5WfHX4yi9YvA)",
+    "Source": ""
+  },
+  {
+    "Term": "Input Types",
+    "Description": "The input keyword is used to describe an object that may be used as an input parameter. Instead of duplicating each individual argument, this object may be reused across different operations.",
+    "Tags": "type,spec",
+    "Example": "The input type PersonInput for example, has been utilized in both the query and the mutation instead of individually specifying age and name parameters for both. \n\ninput PersonInput {\n name: String!\n age: Int\n}\n\n''' Says hello to the specified person '''\ntype Query {\n  hello(person: PersonInput): String!\n}\n\ntype Mutation {\n  createPerson(person: PersonInput!): Person!\n}",
+    "Image": "Input Types (https://v5.airtableusercontent.com/v1/21/21/1696392000000/Y4ypA-KLMLYLVFaUnQ8Suw/vQXmXjrmyekkFGoVsofqEkR-e-_-pOulVy7ZCf7KM8OdXNUn3x5Y7GvyNx3Y91vaszDaSMqP8m40lo0rRf0cKVD8f-Xhtrj_k5kA1RnAFTU/scOR-MzavOd6XgmtpxVse1MPqfHBu4ftJC12cWl7SJs)",
+    "Source": ""
+  },
+  {
+    "Term": "Output Types",
+    "Description": "Output types are objects that are returned as a response to GraphQL operations.",
+    "Tags": "type,spec",
+    "Example": "For a query that searches for a particular book, the output type may be represented as a Book that includes title, author, ISBN, year it was published, publisher details, etc., while the input argument required to find the book may contain just the title and author. \nsearch(book: BookSearchInput): Book",
+    "Image": "Output Types (https://v5.airtableusercontent.com/v1/21/21/1696392000000/Z91s21hf4--byOBnCdcGLQ/8jNy_jRg5idhYdoj7k4yo4EywG4uzP7ai2yx2d_kwVaQZD3SgvEhCx9Uqk9INKlGjQg3nPPpAsf47IqCkA0DO_M2Sh8bmJcImm4L3deD5Ro/g3KyHAzfB-snAYkmejOvwMPZNZ-21Q1SCr6lIapMC9U)",
+    "Source": ""
+  },
+  {
+    "Term": "Operations",
+    "Description": "An operation describes the actions executed by the GraphQL API. GraphQL supports three types of operations.",
+    "Tags": "operation,spec",
+    "Example": "The three types of GraphQL operations are queries, mutations, and subscriptions.",
+    "Image": "Operations (https://v5.airtableusercontent.com/v1/21/21/1696392000000/u-9ml1hdJ5bWM0ZOnZH2hg/ZzPwo2Mbxp7Fo4KLOkFiw1QoJEYQ_nu-wR8q9HFMa0K0IcghaNNWUDEKj6Rp5avajyDv-n_2z5GZvhJZ4wYO8SQvzpyE7ccLegvzlAIwH-8/YnahmesCqRjMsraJz9QI5pyLIrZbky6kFFwoiSehlf4)",
+    "Source": ""
+  },
+  {
+    "Term": "Directives",
+    "Description": "A directive can be applied to a field to instruct a resolver function on how to execute that query.",
+    "Tags": "spec",
+    "Example": "The GraphQL specification includes directives such as @skip, @include, @deprecated and @specifiedBy",
+    "Image": "Directives (https://v5.airtableusercontent.com/v1/21/21/1696392000000/-YPE3tykA_RT77LXX16VOg/d5Ic4Ua_sgPfAlEd9ZAQAVM6lCwpdTaOQqRvkfxg3IrqZk-0w8i8ygpI-0bZOZJgg5mfFf0zGkTd1cgtk-u4uhnHISdvfee1JUR3GVf2Big/CVHeg3JBe1-8MjRNbuD9u-NMDKgzWXQu26MCxqa8rmM)",
+    "Source": "https://hackmd.io/@gqlnstuff/rkdkuBmyn"
+  },
+  {
+    "Term": "Object Level Authorization",
+    "Description": "Object level authorization in GraphQL is the process of controlling access to specific objects in a GraphQL API based on the authenticated user's permissions. This allows you to restrict access to certain data based on the user's role or other criteria. When a client makes a request to a field or object, the authorization logic is checked before returning the data. If the user is not authorized to access the data, an error or null value is returned instead.",
+    "Tags": "non-spec,security",
+    "Example": "type Mutation {\n    updatePost(id: ID! content: String!): Post\n      @auth(rules: [{allow: owner, operations:[update] }])",
+    "Image": "Object Level Authorization (https://v5.airtableusercontent.com/v1/21/21/1696392000000/n3Y6YRkt6d_xk9dGD1N5iw/sPPRO1nPDkZN5nCkbdrG5ImospfxpPNqpj1AkR-OMRZU2ap7o_pLADBJU0h7lQjpqXutH1K4ep5gQCrkmd1D7r7JGt71h3OZFq4OnCzRTB1FQAZwIptPlz_gpnJK7b3c/8OTXASudJkXaHGdNcO2ugjHNavyZolbscCCJ1NOD-9U)",
+    "Source": ""
+  },
+  {
+    "Term": "Pagination",
+    "Description": "Pagination in GraphQL is the process of splitting a large result set into smaller \"pages\" of data that can be retrieved by the client application. Pagination is a common technique used in APIs to optimize performance and reduce the amount of data that needs to be transferred over the network.",
+    "Tags": "non-spec,performance",
+    "Example": "query {\n    items(first: 10) {\n       pageInfo {\n          hasNextPage\n          endCursor\n       }\n    }\n}",
+    "Image": "Pagination (https://v5.airtableusercontent.com/v1/21/21/1696392000000/0UtecpCLEKC4uawFNH-ByA/A2nJYX7HSeU1okvJU_i6y6y1sGVJJYy2YLipjAFxkTZ6LTBDzarCbXvrPIuOJibhRaHiMWGkDSJbGtYAJODmvaJoOKTKSJhIkh7X3RVkgEM/I0IhESzAiMfI_SfyyT2QMGc8vEPYJ-TQ4GFMJcpA_VA)",
+    "Source": "https://hackmd.io/@gqlnstuff/BkISy3Gf2"
+  },
+  {
+    "Term": "Persisted Queries",
+    "Description": "Persisted queries improve GraphQL API security because the client can only send a query by passing a hash to call a query stored on the server. The query is persisted on the server, and when it receives a hash that matches, the query is executed on the server. A response is then sent to the client.",
+    "Tags": "non-spec,security",
+    "Example": "curl -X POST -H 'Content-Type: application/json' http://0.0.0.0:8888/ \\ -d '{\"extersions\":{\"persistedQuery\":{\"version\":1, \"sha256Hash\":\"3859372896b05b73942338e77202732793gfh8683234939539c93038wfa83203484\"}}}'",
+    "Image": "Persisted Queries (https://v5.airtableusercontent.com/v1/21/21/1696392000000/6HAbWgxEfJ64jrq05UNCXw/4hoB1-lLWg0pdOOMrBefzeZu3VLjQcNTvZhvgoIX1ajRer3C_9PdxTXKbNHbriuR0ge8E5U93Wa1oxk9bcqypUjONx5CUqVlCzZIu9NgF9o/Cp0CNeU8FkClpZXSRVirvNNLcvZ86SFVGEFV0l9HxTs)",
+    "Source": ""
+  },
+  {
+    "Term": "Caching",
+    "Description": "Caching in GraphQL is the process of storing the results of queries in a cache to improve performance and reduce the amount of data that needs to be retrieved from the server. Caching is a common technique used in APIs to optimize performance and reduce the load on the server.  In GraphQL, caching can be implemented in several ways, including using a server-side cache, a client-side cache, or a combination of both.",
+    "Tags": "non-spec,performance",
+    "Example": "To implement caching, you can add a cache layer that stores the results of queries for a certain period of time. When a client application requests data, the cache is checked first to see if the data is already available. If the data is not available, the query is executed and the result is stored in the cache for future requests.\n\nServer-side caching example - Redis\nClient-side caching example - Apollo client",
+    "Image": "Caching server side (https://v5.airtableusercontent.com/v1/21/21/1696392000000/qRS2y0-aRi_vqvTGF7juqA/LY3romQjXn5Ys0E8uyIR4tXHpzoTrsCybvkKX4e11g4lWlWwIS8P__avNuzVbrqrXxCs32Is07IyK8BssojFJkAfxJZwvBeZxrabfULlYWcWCLUqHbc1idKRLt86uToI/JQw1TFboCA_rukUZhCQsIHxd6FDmefS93RcAxwvjYgc),Caching client side (https://v5.airtableusercontent.com/v1/21/21/1696392000000/dXwx15A-EDp3CSmdfVA7_w/6oz-Txl0ytn1pzs5fMZXcA-7vW1p53NphCrAjUwk93nbjLZqYIxMmO-vMk5ClkcO27dTi649axvtiQOBgesUuTo6VBe5VGNFKjc0YOXOlws/0Eh30eYCcnBLlT2ekwR9wjTcykGp0XgpNouRsBwlZlg)",
+    "Source": "https://hackmd.io/@gqlnstuff/BymgF-1D3"
+  },
+  {
+    "Term": "Batching",
+    "Description": "Batching is a technique that is used with GraphQL to resolve the N + 1 problem. The N+1 problem refers to the issue that can occur when the server makes one request for the initial data set, and then makes additional requests for each related item in the data set.  The DataLoader library is the most common batching and caching solution used with GraphQL.",
+    "Tags": "performance,N +1 problem,non-spec",
+    "Example": "const { request } = require('graphql-request');\n\nconst ENDPOINT = 'https://your-graphql-server.com/graphql';\n\nasync function getUsers() {\n  const query = `\n    query {\n      users {\n        id\n        name\n        posts {\n          title\n        }\n      }\n    }\n  `;\n\n  const data = await request(ENDPOINT, query);\n  return data.users;\n}\n\nasync function main() {\n  const users = await getUsers();\n\n  // Here, we will make one additional request for each user's posts\n  for (const user of users) {\n    console.log(`${user.name} has ${user.posts.length} posts:`);\n    for (const post of user.posts) {\n      console.log(post.title);\n    }\n  }\n}\n\nmain();",
+    "Image": "Batching server side (https://v5.airtableusercontent.com/v1/21/21/1696392000000/Lnzwx6dqSw3-G0QI8-iVdA/9bSWJRb9H0FpmOpoqnW6BzJ2BAKOrDS9kNKrTzbUNmcwUhpn0o03_WQMduNmXZWgIGGw11M2Be0uZgy7CzSIlQYjg-G1pVakwzrVr_z4ggM/PqGfQrQnFzVl1sZV84dHidlUwp_etMKha_izBl1RLAs),Batching client side (https://v5.airtableusercontent.com/v1/21/21/1696392000000/spnTJyT6PfASUtlfesqFLQ/wHMI0MWt5pt9CaFWxLHk-fRnu5HbURKtEsstnTD3Swz_lSVouapi2trFSXPdRRF5hNWILIkCPHoSixj_-HmaSLL_kdx9XxaBxCqO6F-cNdI/2W4tYiVgdMcE_9oyL4oL2biNbFIk9rqDbAMIcUDye9E)",
+    "Source": ""
+  },
+  {
+    "Term": "Introspection",
+    "Description": "Introspection is the capability of returning parts of a schema or the full schema from a GraphQL API using a special client query. It can be used for schema exploration, client code generation, query validation, and documentation generation. In Example, are all of the types that can introspect the schema or parts of it.",
+    "Tags": "schema,spec",
+    "Example": "__Schema\n__Type\n__Field\n__InputValue\n__EnumValue\n__Directive",
+    "Image": "Introspection (https://v5.airtableusercontent.com/v1/21/21/1696392000000/z2ZMNWSGjai7zXVRKFVPRw/XDtlx1ma_1vhyYb3VZ_Jrhepv0QfmWbnpTKGaTuYCKYBgYMQwhQEPNYSL-dBd68sNnP-GkuSze-NYKEv3LnvXhE3gAmvkkX4gkvcpqccTRk/n_sZ5rSAsd6fvWCRvq5sW27NAt8V1laOqZCCHQxEe_M)",
+    "Source": ""
+  },
+  {
+    "Term": "Custom Scalar Types",
+    "Description": "The most common custom scalar type in GraphQL schemas is DateTime, because it isn't a built-in scalar or described in the specification. Custom Scalars can also be used to define other units of measure or whatever is needed by a given implementation.",
+    "Tags": "scalars,schema,spec",
+    "Example": "scalar DateTime\n\ntype Cake {\n  id: ID!\n  name: String!\n  price: Float\n  available: Boolean!\n  hasFrosting: Boolean!\n  hasFilling: Boolean!\n  hasToppingOption: Boolean!\n  toppingKind: String\n  whenCreated: DateTime!\n  lastUpdated: DateTime!\n  }",
+    "Image": "Custom Scalar Types (https://v5.airtableusercontent.com/v1/21/21/1696392000000/Ue-kpi9w3aNwMKvE7h3TCw/SyDP7VxOmS5qssqxBnL8n7FBYME1OxjDZIBp2AgbI3DkakQaHOX830sakAKgVm8fdh4uPFqVuJ0nQgm-3QiW3r1sTWgo1gJEY6kpgg1NG-w/rzOFz2DLX156hTz7vmNCKWN4MtwLlQeASl6uDBtzgLM)",
+    "Source": ""
+  },
+  {
+    "Term": "Scalar Types",
+    "Description": "GraphQL specifies a list of scalar types to identify the data structure of an object field. The list of built-in scalars is given in the Example below.",
+    "Tags": "scalars,spec",
+    "Example": "- Int: A signed 32‐bit integer.\n- Float: A signed double-precision floating-point value.\n- String: A UTF‐8 character sequence.\n- Boolean: true or false.\n- ID: The ID scalar type represents a unique identifier, often used to refetch an object or as the key for a cache. The ID type is serialized in the same way as a String; however, defining it as an ID signifies that it is not intended to be human‐readable.",
+    "Image": "Scalar Types (https://v5.airtableusercontent.com/v1/21/21/1696392000000/QTx32ImwhWC-uVbKku_wwA/U9Sau3LzcafqydhzDc3BMcU46VIU72FSt2gWITme_-DXozgksFLkVKmGfrHd8uq6yVDuhUkEFs9gNfSTUMJHKGnLnFcASKZM4p7TSu7nZ_0/wpmGTXRNal1LGoRew8B81lplqnn0KphuJzAKjeyTavM)",
+    "Source": ""
+  },
+  {
+    "Term": "Fragments",
+    "Description": "In GraphQL, a fragment is a reusable piece of a GraphQL query that can be shared among multiple queries. It allows you to specify a set of fields that you want to retrieve, and then include those fields in any query that needs them.\nFragments provide the ability to send several queries in one request this capability is a key to reducing the number of round trips to the server to fetch data.",
+    "Tags": "field-level,spec",
+    "Example": "Example 1 Schema Definition\nfragment UserFields on User {\n   id\n   name\n   email\n}\nClient call:\nquery GetUsers {\n   users {\n    ...UserFields\n }\n}\n\nExample 2 Schema Definition\nfragment UserFields on User {\n id\n name\n email\n avatar(size: $avatarSize)\n}\nClient call:\nquery GetUsers($avatarSize: Int!) {\n users {\n  ...UserFields\n }\n}",
+    "Image": "Fragments (https://v5.airtableusercontent.com/v1/21/21/1696392000000/TI21qXlgGsf8LbzE-HzEcw/lFwo0_dXlYKtHhJKe_2lx0Cj9jFboo-nWDmaBAG3uAD948Gr4vnnJw493FxIuclnPkI_sQbERYDhJlSQJSyUJOihal9XEHytEl6PmFzU0GA/V-YMhEflPixycDMh3S1Ci-rfx33_H6VY9QlLQhCgGA4)",
+    "Source": ""
+  },
+  {
+    "Term": "Execution Engine",
+    "Description": "The GraphQL execution engine is responsible for handling the entire request-response cycle, from parsing and validating the query to executing the query and returning the result. It's an essential component of any GraphQL implementation and allows developers to define a clear contract between the client and the server.",
+    "Tags": "spec,implementation",
+    "Example": "Steps:\n1. Parsing\n2. Validation\n3. Execution",
+    "Image": "Execution Engine (https://v5.airtableusercontent.com/v1/21/21/1696392000000/gX41ALUFAw7kulSHukplZQ/c12nTrextN0R5Xu042_QNvmD7udSTqsOxRl50VWd1kGLgOVvu_ccpH50FQCFxWMB4h7imwn1JGb7UMDOgvXiLzEp9yT2EMn1PI_KIyfvqbQ/2Q04fpctepXyB1VJExEyalIaT9Sh2z3Ir427b-CEsR8)",
+    "Source": "https://hackmd.io/@gqlnstuff/SyeopuApi"
+  },
+  {
+    "Term": "List Types",
+    "Description": "List types represent an array of values of a specific type. In the example, Post is the list type.",
+    "Tags": "type,spec",
+    "Example": "type User {\n    id: ID!\n    name: String!\n    email: String!\n    posts: [Post]!\n}",
+    "Image": "List Types (https://v5.airtableusercontent.com/v1/21/21/1696392000000/jqjtf8ZtbNZcvmd65GUF1Q/o_o-Iy_nvlPXf9DAEhlSgnM9KICLk25EqM2dHlKwxiOLA3cT2stKLiQLF2c1y_3XQTYUm026dS9MsYGBLnGQQOiyAPov_L0UFqMfdBsr_bE/hGmi6zxAzc1f-D0RmL0SoY2xARiYfz_MKePOD1htmvk)",
+    "Source": ""
+  },
+  {
+    "Term": "Fields",
+    "Description": "In GraphQL, fields are the basic building blocks of a query or mutation operation. Fields are used to request specific data from an object type and are expressed using the name of the field followed by any necessary arguments and a selection set.",
+    "Tags": "spec",
+    "Example": "query {\n  user(id: \"123\") {\n    name\n    email\n    posts(limit: 10) {\n      title\n      content\n    }\n  }\n}",
+    "Image": "Fields (https://v5.airtableusercontent.com/v1/21/21/1696392000000/NLH93D38WCTGoiNE-q24Og/UzfLMpRiu7JoS9PV_U-KHXgCDDX5xMGKwyQy_dul9hKz0byJbSzs4EgqunBioLQYWqSLke57v1kKcq-za7g4_2HWa3eLKV4L0RRPK1zq8so/6UNHEgsgDsZ7hsCCxUObpGnsdeaHNnrJkbPm5aXn5cI)",
+    "Source": ""
+  },
+  {
+    "Term": "Arguments",
+    "Description": "In GraphQL, arguments are used to filter, sort, paginate, or otherwise modify the results of a field. Arguments are expressed using the name of the argument, followed by a colon and the value of the argument.",
+    "Tags": "spec",
+    "Example": "query {\n  user(id: \"123\") {\n    name\n    email\n    posts(limit: 10, sortBy: \"createdAt\") {\n      title\n      content\n    }\n  }\n}",
+    "Image": "Arguments (https://v5.airtableusercontent.com/v1/21/21/1696392000000/UTjciN7eOwmIC1EthodzeQ/NpGoMHNAxMJBjZflbby3GTUdppXXxz_o3F45Nl5ViF1t0yT_nj_9wIyO0MQqN6qDn_62AwWk1Spj9QjvsVxnLjayVolha-zpW5w4Mh8upyE/xwzX5Bd0OFt9ajTBAMKQlxo8uEqybkQhHshvKm1S5wI)",
+    "Source": ""
+  },
+  {
+    "Term": "Field Alias",
+    "Description": "In GraphQL, a field alias is a way to assign a different name to a field in a query. Field aliases are expressed using a colon followed by a new name for the field.\n\nOverall, field aliases are a simple but powerful feature in GraphQL that can be used to improve the clarity and precision of queries, resolve naming conflicts, and make it easier to work with complex data structures.",
+    "Tags": "spec",
+    "Example": "query {\n  user(id: \"123\") {\n    name\n    shortBio: bio(words: 15)\n    longBio: bio(words: 50)\n    address {\n      street\n      city\n      state\n    }\n  }\n}",
+    "Image": "Field Alias (https://v5.airtableusercontent.com/v1/21/21/1696392000000/gy4s9uuCIyoq79XSHVskXQ/64XxvlWgJcN1VM7mGDWfoRKWKpPWc9FmO-msoq7r1SRaftGIu3L0uZ525rA-bl6iFdGMe8yX8lm8-pf6v537xf5xPMdsi0iTpY6_tOFw1S8/tZK66eybiF6rIVbBg-XdqRHZnIW-lYN6ECAPySxdAqU)",
+    "Source": ""
+  },
+  {
+    "Term": "Inline Fragments",
+    "Description": "Inline fragments are used to conditionally include fields in a query based on the type of an object. Inline fragments are expressed using the ... syntax followed by the name of the object type and a selection set.",
+    "Tags": "spec,client",
+    "Example": "query {\n  user(id: \"123\") {\n    name\n    booking {\n      ...on Hotel {\n        propertyType\n      }\n      ...on Flight {\n        stops\n      }\n    }\n  }\n}",
+    "Image": "Inline Fragments (https://v5.airtableusercontent.com/v1/21/21/1696392000000/4YKXv9P-m9Sxo_SU8n6u8Q/dP25JVb7no6sz8VaN0KcnSqomoNsoeaCkhQcAQ1WSxh5RJKoq9_OorMCRQ09lNO3HWlfzxwfCzc8QxqaNT6dZl9OMQ3zd2rOkL-Mc9_6BwU/5fE5JkIx9AxkVxnerqwoogWgejNGZQdxBr6y5qzAW6s)",
+    "Source": ""
+  },
+  {
+    "Term": "Type References",
+    "Description": "Type references in GraphQL can be used to define relationships between any object types, and can be used to model complex relationships between data types. They allow developers to define clear and well-structured data models that can be easily queried and manipulated using GraphQL.",
+    "Tags": "spec",
+    "Example": "type Post {\n  id: ID!\n  title: String!\n  content: String\n  author: User!\n  comments: [Comment!]!\n}\n\ntype User {\n  id: ID!\n  name: String!\n  email: String!\n  posts: [Post!]!\n}\n\ntype Comment {\n  id: ID!\n  text: String!\n  author: User!\n  post: Post!\n}",
+    "Image": "Type References (https://v5.airtableusercontent.com/v1/21/21/1696392000000/i1-xiJbHsq_UdXzO8W4UEw/LyzP70g-E6HrLBcEVmpBQEOyK0utyh3v3zLv9gxpYXhFNrgxoYVSK6DW_7158_PtKHmTKyis7p96RFLhN7aQDSCezNDyUaYVEA5lgiQtNlE/aLg69d27v5QJ-X-qecrhDKwV3ag1m2O8TmIdCJ2Ju50)",
+    "Source": ""
+  },
+  {
+    "Term": "Root Operation Types",
+    "Description": "In GraphQL, root operation types are the three entry points to a GraphQL API: query, mutation, and subscription. Each of these types represents a different kind of operation that a client can perform on the API.",
+    "Tags": "spec,operation",
+    "Example": "type Query {\n  user(id: ID!): User\n  posts(limit: Int): [Post!]!\n}\n\ntype Mutation {\n  createUser(name: String!, email: String!): User!\n  createPost(author: ID!, title: String!, content: String!): Post!\n  updatePost(id: ID!, title: String, content: String): Post!\n  deletePost(id: ID!): Boolean!\n}\n\ntype Subscription {\n  newPost: Post\n}",
+    "Image": "Root Operation Types (https://v5.airtableusercontent.com/v1/21/21/1696392000000/ypAuzbO_ETbR5ZF2wTUvlw/3wArB_HbZcgoFzGQNUN038s4mZhRAsiyeIElXQOrw6JEpct0M27d9TsPJNsUv2RCzVxkh_obLkaAcgQ6SgcsQJYCt1n06H2SqvMv5MtHBPg/F4ECOPuQztVGj3XzMsA2fNSfwvtSd4MKqQPUH9tsiyQ)",
+    "Source": ""
+  },
+  {
+    "Term": "Type Validation",
+    "Description": "In GraphQL, type validation is the process of checking that a query is well-formed and satisfies the schema. Type validation checks that each field and argument in a query is of the correct type and that all required fields and arguments are present.\n\nType validation in GraphQL is an important step in the process of building a GraphQL API, as it ensures that queries are well-formed and conform to the schema. By validating queries against the schema, developers can catch errors early in the development process and ensure that the API is consistent and easy to use.",
+    "Tags": "spec,schema",
+    "Example": "",
+    "Image": "Type Validation (https://v5.airtableusercontent.com/v1/21/21/1696392000000/ZkK3jCap9-YsuNUlsvZLpg/5WYnITyOQSYRF-p11neUT6X7OZrVvLKQ6trKBHxQaW8c1NyZ75lD30Ym-xCAtHAAhEVNZ5KzI5O_l68Uvb2BZ4ArkKr8K8EJvkQGEslpp38/wdtY5X-nHvGMDqPby7rXPZ19JZ1JB-I3KBEIxLMXH7c)",
+    "Source": ""
+  },
+  {
+    "Term": "Named Types",
+    "Description": "Named types are used to define custom object types, scalar types, and enumeration types. Named types are defined using the type keyword followed by the name of the type and its fields or values.\n\nOverall, named types are a powerful feature in GraphQL that allow developers to define custom types for their data, providing more control and flexibility over the types of data that can be returned from a GraphQL API.",
+    "Tags": "spec",
+    "Example": "type Post {\n  id: ID!\n  title: String!\n  content: String\n  author: User!\n  createdAt: DateTime!\n  status: PostStatus!\n}\n\ntype User {\n  id: ID!\n  name: String!\n  email: String!\n  posts: [Post!]!\n}\n\nenum PostStatus {\n  DRAFT\n  PUBLISHED\n  ARCHIVED\n}",
+    "Image": "Named Types (https://v5.airtableusercontent.com/v1/21/21/1696392000000/5IF12G-2ypuX5LxWUUDHqA/ygOh1B07domoB0fn2uM_fvi6LHU_2JkfxamSAl23RYXRT30tiL7l8hXZ1qOi4Huv2rQG5t8dDxlY_vSqy0WG4XzZNH4pPSZJNrREykxmPww/mgmSBKODgKzHXGLvLdAdHp1iNI-dF-BT6PVfrUOYNrM)",
+    "Source": ""
+  },
+  {
+    "Term": "Compilers",
+    "Description": "A compiler transforms GraphQL queries into an optimized representation. This representation can then be used to optimize performance.",
+    "Tags": "non-spec,performance",
+    "Example": "Client-side compiler - Relay\nServer-side compiler - Apollo",
+    "Image": "Compilers server side (https://v5.airtableusercontent.com/v1/21/21/1696392000000/1jJxFvmX9J8LI_gWZ4lUEg/RTiCfYD9--FeKzvN0ppaW_pnx55-2BLAUUYJ1JCMnW_odHi_3M4i2y4PYPwFPVk_kPqQLN2W4V-r1i1gDttbrdy8MVp8qgYbKO84CnSSIBQ/a8CSqdc1-XKcRSXMo_aCXum2XC3kw_LEugudJ4k2r0Q),Compilers client side (https://v5.airtableusercontent.com/v1/21/21/1696392000000/unfDJMznrBNExQiC3Tvt8A/34yTumcYb3nuCPkiwBEz8ftSvA7YeN8anBXtC755On9EtPLVycfwRyD9hAQScyfRYS9IV3oUd_hYqYQ8QbXaKEWeEd7CQlv3SJnrnTpKhsc/VY7Bh3pQUODuubrgPQR7QXYZL7iAAtLbVjrZnL3GrFg)",
+    "Source": ""
+  }
+]
